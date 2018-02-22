@@ -7,8 +7,7 @@ const camera = new Raspistill({
     width: 600,
     height: 600
 });
-var AWS = require('aws-sdk');
-AWS.config.update({region:'us-east-1'});
+
 
 var s3upload = require('./upload-s3');
 var speaker = require('./speaker');

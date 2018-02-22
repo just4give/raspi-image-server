@@ -1,4 +1,5 @@
 // Load the SDK
+const config = require('./config.json');
 const AWS = require('aws-sdk')
 const Stream = require('stream')
 const Speaker = require('speaker')
@@ -6,7 +7,7 @@ const Speaker = require('speaker')
 // Create an Polly client
 const Polly = new AWS.Polly({
     signatureVersion: 'v4',
-    region: 'us-east-1'
+    region: config.awsRegion
 })
 
 // Create the Speaker instance
@@ -28,7 +29,7 @@ module.exports.speak = function(text){
   Polly.synthesizeSpeech({
       'Text': text,
       'OutputFormat': 'pcm',
-      'VoiceId': 'Kimberly'
+      'VoiceId': config.lexVoiceId
   }, (err, data) => {
       if (err) {
           console.log(err.code)
