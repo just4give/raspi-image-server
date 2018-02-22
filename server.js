@@ -55,7 +55,7 @@ router.post('/capture', function(req, res) {
                   speaker.speak(text);
 
               }else{
-                  speak.speak("Hello! We never met before. What's your name?");
+                  speaker.speak("Hello! We never met before. What's your name?");
               }
             }
           })
