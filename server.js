@@ -57,6 +57,8 @@ router.post('/capture', function(req, res) {
               }else{
                   speaker.speak("Hello! We never met before. What's your name?");
               }
+            }else{
+              speaker.speak("I can's see any faces. Are you human?");
             }
           })
           res.json({ status: 'pass', key: fileName });
