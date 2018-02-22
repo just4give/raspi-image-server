@@ -47,11 +47,11 @@ router.post('/capture', function(req, res) {
           //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           faceSearch.search(fileName, function(err, data){
             if(!err){
-              var text = 'I am ';
-              if(data.FaceMatches && data.FaceMatches.length>0){
 
-                  text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
-                  data.FaceMatches[0].Face.ExternalImageId;
+              if(data.FaceMatches && data.FaceMatches.length>0){
+                  var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
+                  // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
+                  // data.FaceMatches[0].Face.ExternalImageId;
                   speaker.speak(text);
 
               }else{
