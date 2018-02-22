@@ -11,6 +11,7 @@ var AWS = require('aws-sdk');
 AWS.config.update({region:'us-east-1'});
 
 var s3upload = require('./upload-s3');
+var speaker = require('./speaker');
 
 app.use(basicAuth({
     users: { 'raspi': 'secret' }
@@ -21,7 +22,7 @@ app.use(basicAuth({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 80;        // set our port
+var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -32,14 +33,16 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 router.post('/capture', function(req, res) {
-  var fileName = new Date()+".jpg";
+  var fileName = new Date().getTime()+".jpg";
   console.log('filename', fileName);
   camera.takePhoto(fileName).then((photo) => {
     console.log('photo captured');
+    speaker.speak('Image has been captured... ');
     s3upload.upload(fileName, function(err,data){
         if(err){
           res.json({ status: 'fail' });
         }else{
+          speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           res.json({ status: 'pass', key: fileName });
         }
     })
