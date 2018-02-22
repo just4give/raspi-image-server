@@ -9,8 +9,10 @@ const camera = new Raspistill({
 });
 
 
-var s3upload = require('./upload-s3');
-var speaker = require('./speaker');
+const s3upload = require('./upload-s3');
+const speaker = require('./speaker');
+const faceSearch = require('./search-faces');
+
 
 app.use(basicAuth({
     users: { 'raspi': 'secret' }
@@ -36,12 +38,25 @@ router.post('/capture', function(req, res) {
   console.log('filename', fileName);
   camera.takePhoto(fileName).then((photo) => {
     console.log('photo captured');
-    speaker.speak('Image has been captured... ');
+    //speaker.speak('Image has been captured... ');
     s3upload.upload(fileName, function(err,data){
         if(err){
           res.json({ status: 'fail' });
         }else{
-          speaker.speak('Image has been uploaded to S3 bucket raspi118528');
+          //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
+          faceSearch.search(fileName, function(err, data){
+            if(!err){
+              if(data.FaceMatches && data.FaceMatches.length>0){
+
+                  text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
+                  data.FaceMatches[0].Face.ExternalImageId;
+                  speaker.speak(text);
+
+              }else{
+                  speak.speak("Hello! We never met before. What's your name?");
+              }
+            }
+          })
           res.json({ status: 'pass', key: fileName });
         }
     })
