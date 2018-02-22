@@ -43,6 +43,7 @@ router.post('/capture', function(req, res) {
         if(err){
           res.json({ status: 'fail' });
         }else{
+          console.log('uploaded image to s3 bucket: '+fileName);
           //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           faceSearch.search(fileName, function(err, data){
             if(!err){

@@ -8,17 +8,25 @@ var fs = require('fs');
 
  module.exports.upload = function(fileName, cb){
    var bitmap = fs.readFileSync('./photos/'+fileName);
+   
    var params = {
      Body: bitmap,
      Bucket: config.s3Bucket,
      Key: fileName
     };
     s3.putObject(params, function(err, data) {
+      fs.exists('./photos/'+fileName, function(exists) {
+        if(exists) {
+
+          fs.unlink('./photos/'+fileName);
+        }
+        });
+
       if (err) {
         console.log(err, err.stack);
         cb(err);
       }else{
-        console.log(data);
+        //console.log(data);
         cb(null,data);           // successful response
       }
 
