@@ -5,7 +5,8 @@ const basicAuth = require('express-basic-auth');
 const Raspistill = require('node-raspistill').Raspistill;
 const camera = new Raspistill({
     width: 600,
-    height: 600
+    height: 600,
+    time:1
 });
 
 
