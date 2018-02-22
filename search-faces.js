@@ -6,18 +6,17 @@ const speaker = require('./speaker');
 
 
 
-module.exports.search = function(bitmap,cb){
+module.exports.search = function(fileName,cb){
 
   var params = {
     "CollectionId": config.awsFaceCollection,
      "FaceMatchThreshold": 90,
      "MaxFaces": 1,
      "Image": {
-       "Bytes": bitmap
-        // "S3Object": {
-        //    "Bucket": config.s3Bucket,
-        //     "Name": fileName
-        // }
+        "S3Object": {
+           "Bucket": config.s3Bucket,
+            "Name": fileName
+        }
      }
   };
 
