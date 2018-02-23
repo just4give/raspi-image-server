@@ -18,9 +18,10 @@ module.exports.search = function(fileName,cb){
         }
      }
   };
-  console.log('searching');
+  console.log('1.searching');
 
   rekognition.searchFacesByImage(params, function(err, data) {
+    console.log('2.searching');
    if (err) {
      console.log('error in searchFacesByImage',err); // an error occurred
      cb(err);

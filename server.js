@@ -47,8 +47,10 @@ router.post('/capture', function(req, res) {
           console.log('uploaded image to s3 bucket: '+fileName);
           //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           faceSearch.search(fileName, function(err, data){
+            console.log('3. searching');
+            res.json({ status: 'pass', key: fileName });
             if(!err){
-              res.json({ status: 'pass', key: fileName });
+
               if(data.FaceMatches && data.FaceMatches.length>0){
                   var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
                   // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
