@@ -48,9 +48,11 @@ router.post('/capture', function(req, res) {
           //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           faceSearch.search(fileName, function(err, data){
             console.log('3. searching');
-            res.json({ status: 'pass', key: fileName });
+            setTimeout(function(){
+              res.json({ status: 'pass', key: fileName });
+            },10000)
             if(!err){
-
+               console.log('4. searching');
               if(data.FaceMatches && data.FaceMatches.length>0){
                   var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
                   // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
@@ -61,6 +63,7 @@ router.post('/capture', function(req, res) {
                   speaker.speak("Hello! We never met before. What's your name?");
               }
             }else{
+              console.log('5. searching');
               speaker.speak("I can's see any faces. Are you human?");
             }
           })
