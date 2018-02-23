@@ -2,7 +2,6 @@ const config = require('./config.json');
 const AWS = require('aws-sdk');
 AWS.config.update({region:config.awsRegion});
 const rekognition = new AWS.Rekognition();
-const speaker = require('./speaker');
 
 
 
@@ -19,7 +18,7 @@ module.exports.search = function(fileName,cb){
         }
      }
   };
-
+  console.log('searching');
 
   rekognition.searchFacesByImage(params, function(err, data) {
    if (err) {
