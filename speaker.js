@@ -25,7 +25,7 @@ let params = {
 
 
 module.exports.speak = function(text){
-
+ console.log('start speaking');
   Polly.synthesizeSpeech({
       'Text': text,
       'OutputFormat': 'pcm',

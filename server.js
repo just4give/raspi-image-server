@@ -52,14 +52,16 @@ router.post('/capture', function(req, res) {
               res.json({ status: 'pass', key: fileName });
             },10000)
             if(!err){
-               console.log('4. searching');
+
               if(data.FaceMatches && data.FaceMatches.length>0){
+                 console.log('4.0. searching');
                   var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
                   // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
                   // data.FaceMatches[0].Face.ExternalImageId;
                   speaker.speak(text);
 
               }else{
+                 console.log('4.1. searching');
                   speaker.speak("Hello! We never met before. What's your name?");
               }
             }else{
