@@ -47,26 +47,26 @@ router.post('/capture', function(req, res) {
           console.log('uploaded image to s3 bucket: '+fileName);
           //speaker.speak('Image has been uploaded to S3 bucket raspi118528');
           faceSearch.search(fileName, function(err, data){
-            console.log('3. searching');
-            setTimeout(function(){
-              res.json({ status: 'pass', key: fileName });
-            },10000)
+
+
             if(!err){
 
               if(data.FaceMatches && data.FaceMatches.length>0){
-                 console.log('4.0. searching');
+
                   var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
                   // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
                   // data.FaceMatches[0].Face.ExternalImageId;
-                  speaker.speak(text);
+                  //speaker.speak(text);
+                  res.json({ status: 'matched', key: fileName ,message: text});
 
               }else{
-                 console.log('4.1. searching');
-                  speaker.speak("Hello! We never met before. What's your name?");
+                  res.json({ status: 'unmatched', key: fileName ,message: "Hello! We never met before. What's your name?"});
+                  //speaker.speak("Hello! We never met before. What's your name?");
               }
             }else{
-              console.log('5. searching');
-              speaker.speak("I can's see any faces. Are you human?");
+
+              //speaker.speak("I can's see any faces. Are you human?");
+                res.json({ status: 'error', key: fileName ,message: "I can's see any faces. Are you human?"});
             }
           })
 
