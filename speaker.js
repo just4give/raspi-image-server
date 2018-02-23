@@ -11,11 +11,7 @@ const Polly = new AWS.Polly({
 })
 
 // Create the Speaker instance
-const Player = new Speaker({
-  channels: 1,
-  bitDepth: 16,
-  sampleRate: 16000
-})
+
 
 let params = {
     'Text': 'Hi, my name is Dexter.',
@@ -25,6 +21,13 @@ let params = {
 
 
 module.exports.speak = function(text){
+
+  const Player = new Speaker({
+    channels: 1,
+    bitDepth: 16,
+    sampleRate: 16000
+  })
+
  console.log('start speaking');
   Polly.synthesizeSpeech({
       'Text': text,
@@ -36,11 +39,11 @@ module.exports.speak = function(text){
       } else if (data) {
           if (data.AudioStream instanceof Buffer) {
               // Initiate the source
-              var bufferStream = new Stream.PassThrough()
+              var bufferStream = new Stream.PassThrough();
               // convert AudioStream into a readable stream
-              bufferStream.end(data.AudioStream)
+              bufferStream.end(data.AudioStream);
               // Pipe into Player
-              bufferStream.pipe(Player)
+              bufferStream.pipe(Player);
           }
       }
   })
