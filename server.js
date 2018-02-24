@@ -66,7 +66,7 @@ router.post('/capture', function(req, res) {
             }else{
 
               //speaker.speak("I can's see any faces. Are you human?");
-                res.json({ status: 'error', key: fileName ,message: "I can's see any faces. Are you human?"});
+                res.json({ status: 'error', key: fileName ,message: "I can's see any face. Please come in front of camera?"});
             }
           })
 
