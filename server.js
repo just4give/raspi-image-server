@@ -53,7 +53,8 @@ router.post('/capture', function(req, res) {
 
               if(data.FaceMatches && data.FaceMatches.length>0){
 
-                  var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
+                  //var text = 'Hello '+data.FaceMatches[0].Face.ExternalImageId + '. How are you?';
+                  var text = data.FaceMatches[0].Face.ExternalImageId ;
                   // text += Number.parseFloat(data.FaceMatches[0].Similarity).toFixed(2)+' % confident that you are '+
                   // data.FaceMatches[0].Face.ExternalImageId;
                   //speaker.speak(text);
